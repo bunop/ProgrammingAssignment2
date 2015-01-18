@@ -1,29 +1,25 @@
-## Put comments here that give an overall description of what your
-## functions do
 
 ## In this assignment I try to write a pair of functions that cache the inverse of a matrix.
 ## For this assignment, assume that the matrix supplied is always invertible.
 
-## Write a short comment describing this function
-
 ## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
-    ## xi is my inverse of matrix
+    ## xi is my inverse of matrix that I want to cache
     xi <- NULL
 
-    ## Function to instantiate the object
+    ## Function to set the matrix (to solve) after I've instantiate a makeCacheMatrix object
     set <- function(y) {
         x <<- y
         xi <<- NULL
     }
 
-    ## a function to get the object
+    ## a function to get the matrix
     get <- function() x
 
-    ## a function to set a value, in this case the inverse of my matrix
+    ## a function to set the inverse of my matrix
     setsolve <- function(solved) xi <<- solved
 
-    ## a function to get a value, in this case the inverse of my matrix
+    ## a function to get the inverse of my matrix
     getsolve <- function() xi
 
     ## now return a list with all this functions defined as key(name) = value (function)
@@ -32,26 +28,24 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
-
 ## This function computes the inverse of the special "matrix" returned by makeCacheMatrix
 ## above. If the inverse has already been calculated (and the matrix has not changed),
 ## then the cachesolve should retrieve the inverse from the cache
-
 cacheSolve <- function(x, ...) {
     ## get inverse of my matrix (invertible as stated by assignment)
     xi <- x$getsolve()
 
     ## is solve(x) already calculated?
     if (! is.null(xi)) {
+        ## yes; returning cached data
         message("getting cached data")
         return(xi)
     }
 
-    ## If I arrive here xi is NULL and I have to solve my matrix.
+    ## If I arrive here, xi is NULL and I have to solve my matrix.
     message("Solving matrix and caching data")
 
-    ## Getting matrix:
+    ## Getting matrix to solve:
     data <- x$get()
 
     ## calculate the inverse of matrix
@@ -87,7 +81,7 @@ cached.m$get()
 ## solving matrix for the first time and caching object
 mi <- cacheSolve(cached.m)
 
-## get cached object
+## get cached object (the inverted matrix)
 mi_cached <- cacheSolve(cached.m)
 
 ## by multipling a matrix for its inverse I get the identity matrix
