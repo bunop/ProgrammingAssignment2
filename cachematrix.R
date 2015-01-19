@@ -4,12 +4,23 @@
 
 ## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
-    ## xi is my inverse of matrix that I want to cache
+    ## xi is my inverse matrix that I want to cache
     xi <- NULL
 
     ## Function to set the matrix (to solve) after I've instantiate a makeCacheMatrix object
+    ## This is a closure, a function defined in another function which encloses the
+    ## environment of the parent function and can access all its variables
     set <- function(y) {
+        ## This syntax never create a variable in the current environment (the 'set' function
+        ## defined here) but instead modifies an existing variable found by walking up
+        ## the parent environments, in such case the x formal argument given while
+        ## calling makeCachematrix
         x <<- y
+
+        ## as above, with "<<-" I modify the xi local variable defined in makeCacheMatrix environment.
+        ## By erasing the cached matrix when I assign a new value on an already defined makeCacheMatrix
+        ## object, I ensure that the inverse matrix has to be calculated by solve using cacheSolve
+        ## So I will call solve on a new matrix object
         xi <<- NULL
     }
 
